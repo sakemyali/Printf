@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list.c                                          :+:      :+:    :+:   */
+/*   print2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 21:18:13 by mosakura          #+#    #+#             */
-/*   Updated: 2025/10/28 21:19:02 by mosakura         ###   ########.fr       */
+/*   Created: 2025/11/03 15:56:56 by mosakura          #+#    #+#             */
+/*   Updated: 2025/11/03 16:30:40 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
-t_list	*ft_lstnew(void *content)
+long	print_uint(va_list list)
 {
-	t_list	*list;
+	char	*nbr;
 
-	list = (t_list *)malloc(sizeof(t_list));
-	if (!list)
-		return (NULL);
-	list->content = content;
-	list->next = NULL;
-	return (list);
+	nbr = ft_itoa((unsigned int)(va_arg(list, int)));
+	ft_putstr(nbr);
 }

@@ -6,7 +6,7 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 23:09:09 by mosakura          #+#    #+#             */
-/*   Updated: 2025/10/28 19:52:52 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/03 16:30:28 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 
 void	ft_putchar(char c)
 {
-	write(1, &c, 1);
+	write(STDOUT_FILENO, &c, 1);
 }
 
-int	ft_strlen(char *str)
+void	ft_putstr(char *str)
 {
-	int	i;
+	while (*str)
+	{
+		ft_putchar(&str);
+		str++;
+	}
+}
+
+long	ft_strlen(char *str)
+{
+	long	i;
 
 	i = 0;
 	while (str[i])
@@ -27,26 +36,46 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	print_hex(int n)
+void	char_to_hex(unsigned long long n, int x)
 {
-	if (n >= 16)
-		print_hex(n / 16);
-	n = n % 16;
-	n += n < 10 ? '0' : 'a' - 10;
-	write(1, &n, 1);
-}
-size_t	countarg(char *formatstr)
-{
-	size_t	i;
-	size_t	count;
+	char	*x_digits;
+	char	*bigx_digits;
 
-	i = 0;
-	count = 0;
-	while(formatstr[i])
+	x_digits = "0123456789abcdef";
+	bigx_digits = "0123456789ABCDEF";
+
+	if (n < 16)
+		ft_putchar('0');
+	if (n >= 16)
 	{
-		if (formatstr[i - 1] != '%' && formatstr[i] == '%')
-			count++;
+		char_to_hex(n / 16, x);
+		char_to_hex(n % 16, x);
+	}
+	else
+	{
+		if (x == 0)
+			ft_putchar(x_digits[n]);
+		else
+			ft_putchar(bigx_digits[n]);
+	}
+}
+
+char	*ft_strdup(const char *s)
+{
+	char		*dest;
+	long		i;
+	long		len;
+
+	len = ft_strlen(s);
+	dest = (char *) malloc((len + 1)*(sizeof(char)));
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		dest[i] = s[i];
 		i++;
 	}
-	return (count);
+	dest[i] = '\0';
+	return (dest);
 }
