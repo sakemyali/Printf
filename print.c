@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: mvrm <mvrm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 14:20:38 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/03 16:14:57 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/04 16:59:43 by mvrm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@ long	print_char(va_list list)
 
 	c = va_arg(list, char);
 	ft_putchar(c);
+	return (1);
 }
 
 long	print_int(va_list list)
 {
 	long	n;
 	char	*str_nbr;
+	long	len;
 
 	n = va_arg(list, int);
 	str_nbr = ft_itoa(n);
+	len = 
 }
 
 long	print_str(va_list list)
