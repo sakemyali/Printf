@@ -6,14 +6,13 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 17:55:51 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/03 16:30:21 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:19:56 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
-static long	getformattype(char c, va_list list)
+static size_t	getformattype(const char c, va_list list)
 {
 	if (c == 'c')
 		return (print_char(list));
@@ -38,38 +37,13 @@ static long	getformattype(char c, va_list list)
 		return (0);
 }
 
-char	formatchar(char *str, size_t count)
+size_t	parsing(const char *str, va_list list)
 {
 	size_t	i;
+	size_t	total_len;
 
 	i = 0;
-	while (count > 0)
-	{
-		if (str[i] == '%')
-			count--;
-		i++;
-	}
-	return (str[i]);
-}
-
-long	printformat(char c, va_list list)
-{
-	long	len;
-	size_t	i;
-
-	len = getformattype(c, list);
-
-	return (len);
-}
-
-int	ft_printf(const char *str, ...)
-{
-	va_list	list;
-	size_t	i;
-	long	total_len;
-
-	i = 0;
-	va_start(list, str);
+	total_len = 0;
 	while (str[i])
 	{
 		if (str[i] != '%')
@@ -78,11 +52,27 @@ int	ft_printf(const char *str, ...)
 			total_len++;
 			i++;
 		}
-		else
+		if (!str[i + 1])
+			return (total_len);
+		if (str[i + 1])
 		{
-			total_len += printformat(str[i + 1], list);
+			total_len += getformattype(str[i + 1], list);
 			i += 2;
 		}
 	}
+	return (total_len);
+}
+
+int	ft_printf(const char *str, ...)
+{
+	va_list	list;
+	size_t	total_len;
+
+	if (!str)
+		return (0);
+	total_len = 0;
+	va_start(list, str);
+	total_len = parsing(str, list);
+	va_end(list);
 	return ((int)total_len);
 }

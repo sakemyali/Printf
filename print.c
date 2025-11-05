@@ -3,55 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvrm <mvrm@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 14:20:38 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/04 16:59:43 by mvrm             ###   ########.fr       */
+/*   Updated: 2025/11/05 18:19:59 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-long	print_char(va_list list)
+size_t	print_char(va_list list)
 {
-	char	c;
+	int		c;
 
-	c = va_arg(list, char);
-	ft_putchar(c);
+	c = va_arg(list, int);
+	ft_putchar((char)c);
 	return (1);
 }
 
-long	print_int(va_list list)
+size_t	print_int(va_list list)
 {
 	long	n;
-	char	*str_nbr;
-	long	len;
+	size_t	len;
 
-	n = va_arg(list, int);
-	str_nbr = ft_itoa(n);
-	len = 
+	n = (va_arg(list, int));
+	ft_putnbr(n);
+	len = nbrlen(n);
+	return (len);
 }
 
-long	print_str(va_list list)
+size_t	print_str(va_list list)
 {
 	char	*str;
+	size_t	len;
 
 	str = va_arg(list, char *);
+	if (!str)
+		str = "(null)";
 	ft_putstr(str);
+	len = ft_strlen(str);
+	return (len);
 }
 
-long	print_voidp(va_list list)
+size_t	print_voidp(va_list list)
 {
-	char	*mem;
+	void				*mem;
+	unsigned long long	ull_mem;
+	size_t				len;
 
 	mem = va_arg(list, void *);
-	char_to_hex((unsigned long long)mem, 0);
+	if (!mem)
+	{
+		ft_putstr("(nil)");
+		return (5);
+	}
+	ft_putstr("0x");
+	ull_mem = (unsigned long long)mem;
+	len = char_to_hex(ull_mem, 0);
+	return (2 + len);
 }
 
-long	print_hex(va_list list, int x)
-{
-	unsigned long long	nbr;
 
-	nbr = (unsigned long long)(va_arg(list, int));
-	char_to_hex(nbr, x);
+size_t	print_hex(va_list list, const int x)
+{
+	const char		*x_digits;
+	const char		*bigx_digits;
+	unsigned int	nbr;
+	size_t			len;
+
+	len = 0;
+	x_digits = "0123456789abcdef";
+	bigx_digits = "0123456789ABCDEF";
+	nbr = va_arg(list, unsigned int);
+	if (x == 0)
+		len = char_to_hex(nbr, x_digits);
+	else
+		len = char_to_hex(nbr, bigx_digits);
+	return (len);
 }

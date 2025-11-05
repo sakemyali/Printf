@@ -6,29 +6,42 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 23:09:09 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/03 16:30:28 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:20:00 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putchar(char c)
+size_t	ft_putchar(const char c)
 {
-	write(STDOUT_FILENO, &c, 1);
+	return (write(STDOUT_FILENO, &c, 1));
 }
 
-void	ft_putstr(char *str)
+void	ft_putstr(const char *s)
 {
-	while (*str)
+	size_t	slen;
+	size_t	total;
+	ssize_t	pdone;
+
+
+	if (!s)
+		return (write(STDOUT_FILENO, "(null)", 6));
+	slen = ft_strlen(s);
+	total = 0;
+	while (slen - total > WRITE_MAX)
 	{
-		ft_putchar(&str);
-		str++;
+		pdone = write(STDOUT_FILENO, s + total, WRITE_MAX);
+		if (pdone < 0)
+			return ;
+		total += (size_t)pdone;
 	}
+	if (slen > total)
+		write(STDOUT_FILENO, s + total, slen - total);
 }
 
-long	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
-	long	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -36,46 +49,37 @@ long	ft_strlen(char *str)
 	return (i);
 }
 
-void	char_to_hex(unsigned long long n, int x)
+void	ft_putnbr(int n)
 {
-	char	*x_digits;
-	char	*bigx_digits;
+	long	nb;
+	char	ch;
 
-	x_digits = "0123456789abcdef";
-	bigx_digits = "0123456789ABCDEF";
-
-	if (n < 16)
-		ft_putchar('0');
-	if (n >= 16)
+	nb = n;
+	if (nb < 0)
 	{
-		char_to_hex(n / 16, x);
-		char_to_hex(n % 16, x);
+		write(STDOUT_FILENO, "-", 1);
+		nb = -nb;
 	}
-	else
-	{
-		if (x == 0)
-			ft_putchar(x_digits[n]);
-		else
-			ft_putchar(bigx_digits[n]);
-	}
+	if (nb >= 10)
+		ft_putnbr((int)(nb / 10));
+	ch = (char)((nb % 10) + '0');
+	write(STDOUT_FILENO, &ch, 1);
 }
 
-char	*ft_strdup(const char *s)
+size_t	nbrlen(long n)
 {
-	char		*dest;
-	long		i;
-	long		len;
+	size_t	i;
 
-	len = ft_strlen(s);
-	dest = (char *) malloc((len + 1)*(sizeof(char)));
-	if (dest == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
+	i = 1;
+	if (n < 0)
 	{
-		dest[i] = s[i];
+		i++;
+		n *= -1;
+	}
+	while (n > 9)
+	{
+		n /= 10;
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (i);
 }

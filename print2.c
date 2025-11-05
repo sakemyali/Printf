@@ -6,16 +6,52 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:56:56 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/03 16:30:40 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:19:59 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-long	print_uint(va_list list)
+size_t	print_uint(va_list list)
 {
-	char	*nbr;
+	unsigned int	nbr;
+	size_t			len;
 
-	nbr = ft_itoa((unsigned int)(va_arg(list, int)));
-	ft_putstr(nbr);
+	nbr = va_arg(list, unsigned int);
+	len = put_signed(nbr);
+	return (len);
+}
+
+static size_t	put_signed(unsigned int u)
+{
+	size_t	len;
+
+	len = 0;
+	if (u >= 10)
+		len += put_signed(u / 10);
+	ft_putchar((char)('0' + (u % 10)));
+	return (len + 1);
+}
+
+size_t	char_to_hex(unsigned long long n, const char *x_digits)
+{
+	char		buffer[16];
+	size_t		count;
+	size_t		i;
+
+	i = 0;
+	count = 0;
+	if (n == 0)
+		return (ft_putchar('0'));
+	while (n)
+	{
+		buffer[i++] = x_digits[n & 0xF];
+		n >>= 4;
+	}
+	while (i--)
+	{
+		ft_putchar(buffer[i]);
+		count++;
+	}
+	return (count);
 }

@@ -6,16 +6,16 @@
 #    By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 23:09:13 by mosakura          #+#    #+#              #
-#    Updated: 2025/10/25 00:03:54 by mosakura         ###   ########.fr        #
+#    Updated: 2025/11/05 16:45:40 by mosakura         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= ft_printf.a
+NAME		= libftprintf.a
 
 SRCS		= ft_printf.c \
-			  ft_putnbr_base \
-			  utils.c \
-			  ./libft/*.c
+			  print.c \
+			  print2.c \
+			  utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
