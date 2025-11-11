@@ -6,7 +6,7 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 17:55:51 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/05 18:19:56 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/12 01:06:39 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static size_t	getformattype(const char c, va_list list)
 		return (0);
 }
 
-size_t	parsing(const char *str, va_list list)
+static size_t	parsing(const char *str, va_list list)
 {
 	size_t	i;
 	size_t	total_len;
@@ -52,9 +52,9 @@ size_t	parsing(const char *str, va_list list)
 			total_len++;
 			i++;
 		}
-		if (!str[i + 1])
+		if (str[i] == '%' && !str[i + 1])
 			return (total_len);
-		if (str[i + 1])
+		if (str[i] == '%' && str[i + 1])
 		{
 			total_len += getformattype(str[i + 1], list);
 			i += 2;

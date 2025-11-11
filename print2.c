@@ -6,21 +6,11 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:56:56 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/05 18:19:59 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/12 00:56:04 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-size_t	print_uint(va_list list)
-{
-	unsigned int	nbr;
-	size_t			len;
-
-	nbr = va_arg(list, unsigned int);
-	len = put_signed(nbr);
-	return (len);
-}
 
 static size_t	put_signed(unsigned int u)
 {
@@ -31,6 +21,16 @@ static size_t	put_signed(unsigned int u)
 		len += put_signed(u / 10);
 	ft_putchar((char)('0' + (u % 10)));
 	return (len + 1);
+}
+
+size_t	print_uint(va_list list)
+{
+	unsigned int	nbr;
+	size_t			len;
+
+	nbr = va_arg(list, unsigned int);
+	len = put_signed(nbr);
+	return (len);
 }
 
 size_t	char_to_hex(unsigned long long n, const char *x_digits)

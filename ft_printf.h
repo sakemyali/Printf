@@ -6,7 +6,7 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 23:09:16 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/05 18:19:57 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/12 01:06:00 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define WRITE_MAX 2147479552
 
+int		ft_printf(const char *str, ...);
 size_t	nbrlen(long n);
 char	*ft_itoa(int n);
 size_t	print_char(va_list list);
@@ -27,10 +28,10 @@ size_t	print_str(va_list list);
 size_t	print_hex(va_list list, int x);
 size_t	print_voidp(va_list list);
 size_t	print_uint(va_list list);
-size_t	char_to_hex(unsigned long long n, int x);
+size_t	char_to_hex(unsigned long long n, const char *x_digits);
 size_t	ft_putchar(char c);
-void	ft_putstr(char *s);
-size_t	ft_strlen(char *str);
+void	ft_putstr(const char *s);
+size_t	ft_strlen(const char *str);
 void	ft_putnbr(int n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 23:09:09 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/05 18:20:00 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/12 01:07:04 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ void	ft_putstr(const char *s)
 	size_t	total;
 	ssize_t	pdone;
 
-
 	if (!s)
-		return (write(STDOUT_FILENO, "(null)", 6));
+	{
+		write(STDOUT_FILENO, "(null)", 6);
+		return ;
+	}
 	slen = ft_strlen(s);
 	total = 0;
 	while (slen - total > WRITE_MAX)

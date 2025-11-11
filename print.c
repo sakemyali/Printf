@@ -6,7 +6,7 @@
 /*   By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 14:20:38 by mosakura          #+#    #+#             */
-/*   Updated: 2025/11/05 18:19:59 by mosakura         ###   ########.fr       */
+/*   Updated: 2025/11/12 01:06:52 by mosakura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ size_t	print_char(va_list list)
 
 size_t	print_int(va_list list)
 {
-	long	n;
+	int		n;
 	size_t	len;
 
 	n = (va_arg(list, int));
@@ -59,10 +59,9 @@ size_t	print_voidp(va_list list)
 	}
 	ft_putstr("0x");
 	ull_mem = (unsigned long long)mem;
-	len = char_to_hex(ull_mem, 0);
+	len = char_to_hex(ull_mem, "0123456789abcdef");
 	return (2 + len);
 }
-
 
 size_t	print_hex(va_list list, const int x)
 {

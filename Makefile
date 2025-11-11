@@ -6,7 +6,7 @@
 #    By: mosakura <mosakura@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 23:09:13 by mosakura          #+#    #+#              #
-#    Updated: 2025/11/05 16:45:40 by mosakura         ###   ########.fr        #
+#    Updated: 2025/11/12 00:52:14 by mosakura         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CC			= cc
 FLAGS		= -Wall -Werror -Wextra -I ./
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	ar rc $(NAME) $(OBJS)
